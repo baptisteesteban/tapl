@@ -1,2 +1,2 @@
-add_executable(test_simple test_simple.cpp)
-target_link_libraries(test_simple PRIVATE tapl)
+add_executable(simple simple.cpp)
+target_link_libraries(simple PRIVATE tapl)
