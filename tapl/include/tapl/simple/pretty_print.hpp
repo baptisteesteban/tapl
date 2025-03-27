@@ -23,5 +23,5 @@ namespace tapl::simple
     std::ostream& m_out;
   };
 
-  void pretty_print(Term* t, std::ostream& out);
+  void pretty_print(const std::unique_ptr<Term>& ast, std::ostream& out);
 } // namespace tapl::simple

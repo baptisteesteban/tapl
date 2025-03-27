@@ -3,60 +3,60 @@
 
 namespace tapl::simple
 {
-  void True::visit(Visitor* viz)
+  void True::visit(Visitor& viz)
   {
-    viz->accept(this);
+    viz.accept(this);
   }
 
-  void False::visit(Visitor* viz)
+  void False::visit(Visitor& viz)
   {
-    viz->accept(this);
+    viz.accept(this);
   }
 
-  void Zero::visit(Visitor* viz)
+  void Zero::visit(Visitor& viz)
   {
-    viz->accept(this);
+    viz.accept(this);
   }
 
-  Succ::Succ(Term* t)
-    : m_term(t)
-  {
-  }
-
-  void Succ::visit(Visitor* viz)
-  {
-    viz->accept(this);
-  }
-
-  Pred::Pred(Term* t)
-    : m_term(t)
+  Succ::Succ(std::unique_ptr<Term>&& t)
+    : m_term(std::forward<std::unique_ptr<Term>>(t))
   {
   }
 
-  void Pred::visit(Visitor* viz)
+  void Succ::visit(Visitor& viz)
   {
-    viz->accept(this);
+    viz.accept(this);
   }
 
-  IsZero::IsZero(Term* t)
-    : m_term(t)
-  {
-  }
-
-  void IsZero::visit(Visitor* viz)
-  {
-    viz->accept(this);
-  }
-
-  IfThenElse::IfThenElse(Term* tif, Term* tthen, Term* telse)
-    : m_if(tif)
-    , m_then(tthen)
-    , m_else(telse)
+  Pred::Pred(std::unique_ptr<Term>&& t)
+    : m_term(std::forward<std::unique_ptr<Term>>(t))
   {
   }
 
-  void IfThenElse::visit(Visitor* viz)
+  void Pred::visit(Visitor& viz)
   {
-    viz->accept(this);
+    viz.accept(this);
+  }
+
+  IsZero::IsZero(std::unique_ptr<Term>&& t)
+    : m_term(std::forward<std::unique_ptr<Term>>(t))
+  {
+  }
+
+  void IsZero::visit(Visitor& viz)
+  {
+    viz.accept(this);
+  }
+
+  IfThenElse::IfThenElse(std::unique_ptr<Term>&& tif, std::unique_ptr<Term>&& tthen, std::unique_ptr<Term>&& telse)
+    : m_if(std::forward<std::unique_ptr<Term>>(tif))
+    , m_then(std::forward<std::unique_ptr<Term>>(tthen))
+    , m_else(std::forward<std::unique_ptr<Term>>(telse))
+  {
+  }
+
+  void IfThenElse::visit(Visitor& viz)
+  {
+    viz.accept(this);
   }
 } // namespace tapl::simple

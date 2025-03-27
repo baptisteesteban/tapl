@@ -9,77 +9,77 @@ namespace tapl::simple
   class Term
   {
   public:
-    virtual void visit(Visitor* viz) = 0;
+    virtual void visit(Visitor& viz) = 0;
   };
 
   class True : public Term
   {
   public:
-    void visit(Visitor* viz) override;
+    void visit(Visitor& viz) override;
   };
 
   class False : public Term
   {
   public:
-    void visit(Visitor* viz) override;
+    void visit(Visitor& viz) override;
   };
 
   class Zero : public Term
   {
   public:
-    void visit(Visitor* viz) override;
+    void visit(Visitor& viz) override;
   };
 
   class Succ : public Term
   {
   public:
-    Succ(Term* t);
-    Term* term() { return m_term; }
+    Succ(std::unique_ptr<Term>&& t);
+    std::unique_ptr<Term>& term() { return m_term; }
 
-    void visit(Visitor* viz) override;
+    void visit(Visitor& viz) override;
 
   private:
-    Term* m_term;
+    std::unique_ptr<Term> m_term;
   };
 
   class Pred : public Term
   {
   public:
-    Pred(Term* t);
-    Term* term() { return m_term; }
+    Pred(std::unique_ptr<Term>&& t);
+    std::unique_ptr<Term>& term() { return m_term; }
 
-    void visit(Visitor* viz) override;
+    void visit(Visitor& viz) override;
 
   private:
-    Term* m_term;
+    std::unique_ptr<Term> m_term;
   };
 
   class IsZero : public Term
   {
   public:
-    IsZero(Term* t);
-    Term* term() { return m_term; }
+    IsZero(std::unique_ptr<Term>&& t);
+    std::unique_ptr<Term>& term() { return m_term; }
 
-    void visit(Visitor* viz) override;
+    void visit(Visitor& viz) override;
 
   private:
-    Term* m_term;
+    std::unique_ptr<Term> m_term;
   };
 
   class IfThenElse : public Term
   {
   public:
-    IfThenElse(Term* tif, Term* tthen, Term* telse);
+    IfThenElse(std::unique_ptr<Term>&& tif, std::unique_ptr<Term>&& tthen, std::unique_ptr<Term>&& telse);
 
-    Term* tif() { return m_if; }
-    Term* tthen() { return m_then; }
-    Term* telse() { return m_else; }
+    std::unique_ptr<Term>& tif() { return m_if; }
+    std::unique_ptr<Term>& tthen() { return m_then; }
+    std::unique_ptr<Term>& telse() { return m_else; }
 
-    void visit(Visitor* viz) override;
+    void visit(Visitor& viz) override;
 
   private:
-    Term* m_if;
-    Term* m_then;
-    Term* m_else;
+    std::unique_ptr<Term> m_if;
+    std::unique_ptr<Term> m_then;
+    std::unique_ptr<Term> m_else;
   };
 } // namespace tapl::simple

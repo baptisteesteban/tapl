@@ -6,13 +6,10 @@
 int main(void)
 {
   using namespace tapl::simple;
-  auto CTrue       = new True;
-  auto CFalse      = new False;
-  auto Cifthenelse = new IfThenElse(CTrue, CTrue, CFalse);
-  pretty_print(Cifthenelse, std::cout);
+
+  std::unique_ptr<Term> ast =
+      std::make_unique<IfThenElse>(std::make_unique<True>(), std::make_unique<True>(), std::make_unique<False>());
+  pretty_print(ast, std::cout);
   std::cout << "\n";
-  delete CTrue;
-  delete CFalse;
-  delete Cifthenelse;
   return 0;
 }
