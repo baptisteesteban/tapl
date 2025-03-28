@@ -33,55 +33,55 @@ namespace tapl::simple
   class Succ : public Term
   {
   public:
-    Succ(std::unique_ptr<Term>&& t);
-    std::unique_ptr<Term>& term() { return m_term; }
+    Succ(std::shared_ptr<Term> t);
+    std::shared_ptr<Term> term() { return m_term; }
 
     void visit(Visitor& viz) override;
 
   private:
-    std::unique_ptr<Term> m_term;
+    std::shared_ptr<Term> m_term;
   };
 
   class Pred : public Term
   {
   public:
-    Pred(std::unique_ptr<Term>&& t);
-    std::unique_ptr<Term>& term() { return m_term; }
+    Pred(std::shared_ptr<Term> t);
+    std::shared_ptr<Term> term() { return m_term; }
 
     void visit(Visitor& viz) override;
 
   private:
-    std::unique_ptr<Term> m_term;
+    std::shared_ptr<Term> m_term;
   };
 
   class IsZero : public Term
   {
   public:
-    IsZero(std::unique_ptr<Term>&& t);
-    std::unique_ptr<Term>& term() { return m_term; }
+    IsZero(std::shared_ptr<Term> t);
+    std::shared_ptr<Term> term() { return m_term; }
 
     void visit(Visitor& viz) override;
 
   private:
-    std::unique_ptr<Term> m_term;
+    std::shared_ptr<Term> m_term;
   };
 
   class IfThenElse : public Term
   {
   public:
-    IfThenElse(std::unique_ptr<Term>&& tif, std::unique_ptr<Term>&& tthen, std::unique_ptr<Term>&& telse);
+    IfThenElse(std::shared_ptr<Term> tif, std::shared_ptr<Term> tthen, std::shared_ptr<Term> telse);
 
-    std::unique_ptr<Term>& tif() { return m_if; }
-    std::unique_ptr<Term>& tthen() { return m_then; }
-    std::unique_ptr<Term>& telse() { return m_else; }
+    std::shared_ptr<Term> tif() { return m_if; }
+    std::shared_ptr<Term> tthen() { return m_then; }
+    std::shared_ptr<Term> telse() { return m_else; }
 
     void visit(Visitor& viz) override;
 
   private:
-    std::unique_ptr<Term> m_if;
-    std::unique_ptr<Term> m_then;
-    std::unique_ptr<Term> m_else;
+    std::shared_ptr<Term> m_if;
+    std::shared_ptr<Term> m_then;
+    std::shared_ptr<Term> m_else;
   };
 
-  using term_ptr_t = std::unique_ptr<Term>;
+  using term_ptr_t = std::shared_ptr<Term>;
 } // namespace tapl::simple

@@ -31,16 +31,16 @@ namespace tapl::simple
     }
   } // namespace details
 
-  std::unique_ptr<Term> parse(const char* source)
+  std::shared_ptr<Term> parse(const char* source)
   {
     details::Driver drv;
     int             status = drv.parse(source);
     if (!status)
-      return std::forward<std::unique_ptr<Term>>(drv.deliver());
+      return std::forward<std::shared_ptr<Term>>(drv.deliver());
     return nullptr;
   }
 
-  std::unique_ptr<Term> parse(const std::string& source)
+  std::shared_ptr<Term> parse(const std::string& source)
   {
     return parse(source.c_str());
   }

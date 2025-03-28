@@ -24,7 +24,7 @@ YY_DECL;
 
 %param { tapl::simple::details::Driver& drv }
 
-%type<std::unique_ptr<tapl::simple::Term>> term
+%type<std::shared_ptr<tapl::simple::Term>> term
 
 %token TRUE     "true"
 %token FALSE    "false"
@@ -42,13 +42,13 @@ YY_DECL;
 
 file: term EOF { drv.receive(std::move($1)); }
 
-term: TRUE { $$ = std::make_unique<True>(); }
-    | FALSE { $$ = std::make_unique<False>(); }
-    | ZERO { $$ = std::make_unique<Zero>(); }
-    | PRED term { $$ = std::make_unique<Pred>(std::move($2)); }
-    | SUCC term { $$ = std::make_unique<Succ>(std::move($2)); }
-    | ISZERO term { $$ = std::make_unique<IsZero>(std::move($2)); }
-    | IF term THEN term ELSE term { $$ = std::make_unique<IfThenElse>(std::move($2), std::move($4), std::move($6)); }
+term: TRUE { $$ = std::make_shared<True>(); }
+    | FALSE { $$ = std::make_shared<False>(); }
+    | ZERO { $$ = std::make_shared<Zero>(); }
+    | PRED term { $$ = std::make_shared<Pred>(std::move($2)); }
+    | SUCC term { $$ = std::make_shared<Succ>(std::move($2)); }
+    | ISZERO term { $$ = std::make_shared<IsZero>(std::move($2)); }
+    | IF term THEN term ELSE term { $$ = std::make_shared<IfThenElse>(std::move($2), std::move($4), std::move($6)); }
 
 %%
 

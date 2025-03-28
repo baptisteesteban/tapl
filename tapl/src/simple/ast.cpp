@@ -18,8 +18,8 @@ namespace tapl::simple
     viz.accept(this);
   }
 
-  Succ::Succ(std::unique_ptr<Term>&& t)
-    : m_term(std::forward<std::unique_ptr<Term>>(t))
+  Succ::Succ(std::shared_ptr<Term> t)
+    : m_term(t)
   {
   }
 
@@ -28,8 +28,8 @@ namespace tapl::simple
     viz.accept(this);
   }
 
-  Pred::Pred(std::unique_ptr<Term>&& t)
-    : m_term(std::forward<std::unique_ptr<Term>>(t))
+  Pred::Pred(std::shared_ptr<Term> t)
+    : m_term(t)
   {
   }
 
@@ -38,8 +38,8 @@ namespace tapl::simple
     viz.accept(this);
   }
 
-  IsZero::IsZero(std::unique_ptr<Term>&& t)
-    : m_term(std::forward<std::unique_ptr<Term>>(t))
+  IsZero::IsZero(std::shared_ptr<Term> t)
+    : m_term(t)
   {
   }
 
@@ -48,10 +48,10 @@ namespace tapl::simple
     viz.accept(this);
   }
 
-  IfThenElse::IfThenElse(std::unique_ptr<Term>&& tif, std::unique_ptr<Term>&& tthen, std::unique_ptr<Term>&& telse)
-    : m_if(std::forward<std::unique_ptr<Term>>(tif))
-    , m_then(std::forward<std::unique_ptr<Term>>(tthen))
-    , m_else(std::forward<std::unique_ptr<Term>>(telse))
+  IfThenElse::IfThenElse(std::shared_ptr<Term> tif, std::shared_ptr<Term> tthen, std::shared_ptr<Term> telse)
+    : m_if(tif)
+    , m_then(tthen)
+    , m_else(telse)
   {
   }
 

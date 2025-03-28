@@ -8,6 +8,7 @@ add_library(tapl
     src/simple/parse.cpp
     src/simple/is_numerical.cpp
     src/simple/is_value.cpp
+    src/simple/eval.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/lexer.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/parser.cpp
 )

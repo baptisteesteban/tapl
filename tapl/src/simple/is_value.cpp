@@ -2,14 +2,26 @@
 
 namespace tapl::simple
 {
-  void IsValueVisitor::accept(True* t)
+  namespace
   {
-    m_res = true;
-  }
-  void IsValueVisitor::accept(False* t)
-  {
-    m_res = true;
-  }
+    class IsValueVisitor : public Visitor
+    {
+    public:
+      IsValueVisitor() = default;
+
+      void accept(True* t) override { m_res = true; }
+      void accept(False* t) override { m_res = true; }
+      void accept(Zero* t) override { m_res = true; }
+      void accept(Succ* t) override { t->term()->visit(*this); }
+      void accept(Pred* t) override { m_res = false; }
+      void accept(IsZero* t) override { m_res = false; }
+      void accept(IfThenElse* t) override { m_res = false; }
+      bool result() const noexcept { return m_res; }
+
+    protected:
+      bool m_res = false;
+    };
+  } // namespace
 
   bool is_value(const term_ptr_t& t)
   {

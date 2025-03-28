@@ -2,40 +2,26 @@
 
 namespace tapl::simple
 {
-  void IsNumericalVisitor::accept(True* t)
+  namespace
   {
-    m_res = false;
-  }
+    class IsNumericalVisitor : public Visitor
+    {
+    public:
+      IsNumericalVisitor() = default;
 
-  void IsNumericalVisitor::accept(False* t)
-  {
-    m_res = false;
-  }
+      void accept(True* t) override { m_res = false; }
+      void accept(False* t) override { m_res = false; }
+      void accept(Zero* t) override { m_res = true; }
+      void accept(Succ* t) override { t->term()->visit(*this); }
+      void accept(Pred* t) override { m_res = false; }
+      void accept(IsZero* t) override { m_res = false; }
+      void accept(IfThenElse* t) override { m_res = false; }
+      bool result() const noexcept { return m_res; }
 
-  void IsNumericalVisitor::accept(Zero* t)
-  {
-    m_res = true;
-  }
-
-  void IsNumericalVisitor::accept(Succ* t)
-  {
-    t->term()->visit(*this);
-  }
-
-  void IsNumericalVisitor::accept(Pred* t)
-  {
-    m_res = false;
-  }
-
-  void IsNumericalVisitor::accept(IsZero* t)
-  {
-    m_res = false;
-  }
-
-  void IsNumericalVisitor::accept(IfThenElse* t)
-  {
-    m_res = false;
-  }
+    protected:
+      bool m_res = true;
+    };
+  } // namespace
 
   bool is_numerical(const term_ptr_t& t)
   {

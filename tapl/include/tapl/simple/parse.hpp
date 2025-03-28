@@ -10,7 +10,7 @@ namespace tapl::simple
     class Driver
     {
     public:
-      using value_t = std::unique_ptr<Term>;
+      using value_t = std::shared_ptr<Term>;
 
     public:
       Driver() = default;
@@ -30,6 +30,6 @@ namespace tapl::simple
     };
   } // namespace details
 
-  std::unique_ptr<Term> parse(const char* source);
-  std::unique_ptr<Term> parse(const std::string& source);
+  std::shared_ptr<Term> parse(const char* source);
+  std::shared_ptr<Term> parse(const std::string& source);
 } // namespace tapl::simple

@@ -15,8 +15,8 @@ TEST(Simple, PrettyPrint)
 {
   std::string_view      expected = "if true then true else false";
   std::ostringstream    out;
-  std::unique_ptr<Term> ast =
-      std::make_unique<IfThenElse>(std::make_unique<True>(), std::make_unique<True>(), std::make_unique<False>());
+  std::shared_ptr<Term> ast =
+      std::make_shared<IfThenElse>(std::make_shared<True>(), std::make_shared<True>(), std::make_shared<False>());
   pretty_print(ast, out);
   ASSERT_EQ(out.str(), expected);
 }

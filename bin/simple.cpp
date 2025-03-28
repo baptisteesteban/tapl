@@ -8,7 +8,7 @@ int main(void)
 {
   using namespace tapl::simple;
 
-  std::unique_ptr<Term> ast = parse("if true then true else false");
+  std::shared_ptr<Term> ast = parse("if true then true else false");
   pretty_print(ast, std::cout);
   std::cout << "\n";
   return 0;
