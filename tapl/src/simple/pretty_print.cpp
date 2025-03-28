@@ -24,23 +24,20 @@ namespace tapl::simple
 
   void PrettyPrintVisitor::accept(Succ* t)
   {
-    m_out << "succ(";
+    m_out << "succ ";
     t->term()->visit(*this);
-    m_out << ")";
   }
 
   void PrettyPrintVisitor::accept(Pred* t)
   {
-    m_out << "pred(";
+    m_out << "pred ";
     t->term()->visit(*this);
-    m_out << ")";
   }
 
   void PrettyPrintVisitor::accept(IsZero* t)
   {
-    m_out << "iszero(";
+    m_out << "iszero ";
     t->term()->visit(*this);
-    m_out << ")";
   }
 
   void PrettyPrintVisitor::accept(IfThenElse* t)
