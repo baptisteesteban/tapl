@@ -4,5 +4,5 @@
 
 namespace tapl::simple
 {
-  term_ptr_t eval(const term_ptr_t& t);
+  term_ptr_t eval(term_ptr_t t);
 } // namespace tapl::simple

@@ -1,4 +1,5 @@
 #include <tapl/simple/pretty_print.hpp>
+#include <tapl/simple/visitor.hpp>
 
 namespace tapl::simple
 {
