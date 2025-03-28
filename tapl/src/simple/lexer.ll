@@ -1,4 +1,5 @@
-%option noyywrap
+%option noyywrap nounput noinput batch
+
 blank [ \t]
 
 %{
@@ -22,3 +23,13 @@ blank [ \t]
     std::cerr << "Unexpected lexer error: " << yytext << "\n";
 }
 %%
+
+void tapl::simple::details::Driver::scan_begin(const char* source)
+{
+    yy_scan_string(source);
+}
+
+void tapl::simple::details::Driver::scan_end()
+{
+    yy_delete_buffer(YY_CURRENT_BUFFER);
+}

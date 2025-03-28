@@ -4,13 +4,11 @@
 %define api.token.constructor
 %define api.token.prefix {TOK_}
 %define api.namespace {tapl::simple}
-%define parse.error verbose
-%define parse.trace
 
 %code provides
 {
 #define YY_DECL \
-    tapl::simple::parser::symbol_type yylex()
+    tapl::simple::parser::symbol_type yylex(tapl::simple::details::Driver& drv)
 
 YY_DECL;
 }
@@ -18,12 +16,15 @@ YY_DECL;
 %code requires
 {
     #include <tapl/simple/ast.hpp>
+    #include <tapl/simple/parse.hpp>
 
     #include <memory>
     #include <utility>
 }
 
-%type<std::unique_ptr<tapl::simple::Term>> term file
+%param { tapl::simple::details::Driver& drv }
+
+%type<std::unique_ptr<tapl::simple::Term>> term
 
 %token TRUE     "true"
 %token FALSE    "false"
@@ -39,7 +40,7 @@ YY_DECL;
 %%
 %start file;
 
-file: term EOF {$$ = std::move($1); }
+file: term EOF { drv.receive(std::move($1)); }
 
 term: TRUE { $$ = std::make_unique<True>(); }
     | FALSE { $$ = std::make_unique<False>(); }

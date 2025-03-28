@@ -9,4 +9,4 @@ add_library(tapl
     ${CMAKE_CURRENT_BINARY_DIR}/lexer.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/parser.cpp
 )
-target_include_directories(tapl PUBLIC include)
+target_include_directories(tapl PUBLIC include ${CMAKE_CURRENT_BINARY_DIR})
