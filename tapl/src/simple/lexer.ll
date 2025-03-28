@@ -1,27 +1,24 @@
-%option noyywrap c++
-%option outfile="lexer.cpp"
+%option noyywrap
+blank [ \t]
 
 %{
-    #include <memory>
+    #include "parser.hpp"    
 %}
 
 %%
 
-true printf("TRUE");
-false printf("FALSE");
-zero printf("ZERO");
-succ printf("SUCC");
-pred printf("PRED");
-iszero printf("ISZERO");
-if printf("IF");
-then printf("THEN");
-else printf("ELSE");
-
-%%
-
-int main(void)
-{
-    auto lexer = std::make_unique<yyFlexLexer>();
-    while (lexer->yylex() > 0) continue;
-    return 0;
+{blank}+   {}
+"true"     return yy::parser::make_TRUE();
+"false"    return yy::parser::make_FALSE();
+"0"        return yy::parser::make_ZERO();
+"iszero"   return yy::parser::make_ISZERO();
+"succ"     return yy::parser::make_SUCC();
+"pred"     return yy::parser::make_PRED();
+"if"       return yy::parser::make_IF();
+"then"     return yy::parser::make_THEN();
+"else"     return yy::parser::make_ELSE();
+<<eof>>    return yy::parser::make_EOF();
+. {
+    std::cerr << "Unexpected lexer error: " << yytext << "\n";
 }
+%%
