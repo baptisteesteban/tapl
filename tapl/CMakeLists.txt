@@ -6,6 +6,7 @@ add_library(tapl
     src/simple/ast.cpp
     src/simple/pretty_print.cpp
     src/simple/parse.cpp
+    src/simple/is_numerical.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/lexer.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/parser.cpp
 )

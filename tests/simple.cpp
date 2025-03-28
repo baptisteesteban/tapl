@@ -1,4 +1,5 @@
 #include <tapl/simple/ast.hpp>
+#include <tapl/simple/is_numerical.hpp>
 #include <tapl/simple/parse.hpp>
 #include <tapl/simple/pretty_print.hpp>
 
@@ -49,5 +50,21 @@ TEST(Simple, Parser)
     std::ostringstream os;
     pretty_print(t, os);
     ASSERT_EQ(ref, os.str());
+  }
+}
+
+TEST(Simple, IsNumerical)
+{
+  const std::pair<const char*, bool> ref[] = {
+      {"0", true},                             //
+      {"if true then true else false", false}, //
+      {"succ 0", true},                        //
+      {"succ succ 0", true}                    //
+  };
+
+  for (auto e : ref)
+  {
+    auto t = parse(e.first);
+    ASSERT_EQ(is_numerical(t), e.second);
   }
 }

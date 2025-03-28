@@ -82,4 +82,6 @@ namespace tapl::simple
     std::unique_ptr<Term> m_then;
     std::unique_ptr<Term> m_else;
   };
+
+  using term_ptr_t = std::unique_ptr<Term>;
 } // namespace tapl::simple
