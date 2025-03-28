@@ -18,7 +18,7 @@ namespace tapl::simple
     void accept(IfThenElse* t);
     bool result() const noexcept;
 
-  private:
+  protected:
     bool m_res = true;
   };
 
