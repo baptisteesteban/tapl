@@ -1,4 +1,5 @@
 #include <tapl/simple/ast.hpp>
+#include <tapl/simple/eval.hpp>
 #include <tapl/simple/is_numerical.hpp>
 #include <tapl/simple/is_value.hpp>
 #include <tapl/simple/parse.hpp>
@@ -85,5 +86,29 @@ TEST(Simple, IsValue)
   {
     auto t = parse(e.first);
     ASSERT_EQ(is_value(t), e.second);
+  }
+}
+
+TEST(Simple, Eval)
+{
+  const std::pair<const char*, const char*> ref[] = {
+      {"0", "0"},                                                       //
+      {"pred 0", "0"},                                                  //
+      {"pred succ 0", "0"},                                             //
+      {"if true then true else false", "true"},                         //
+      {"if false then true else false", "false"},                       //
+      {"iszero 0", "true"},                                             //
+      {"iszero succ 0", "false"},                                       //
+      {"iszero pred 0", "true"},                                        //
+      {"if iszero 0 then true else false", "true"},                     //
+      {"if if true then false else true then true else false", "false"} //
+  };
+  for (auto e : ref)
+  {
+    auto               t  = parse(e.first);
+    auto               tp = eval(t);
+    std::ostringstream os;
+    pretty_print(tp, os);
+    ASSERT_EQ(os.str(), e.second);
   }
 }
