@@ -13,4 +13,8 @@ add_library(tapl-simple
     ${CMAKE_CURRENT_BINARY_DIR}/parser.cpp
 )
 add_library(tapl::simple ALIAS tapl-simple)
-target_include_directories(tapl-simple PUBLIC ${TAPL_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
+target_include_directories(tapl-simple PUBLIC
+    ${CMAKE_CURRENT_BINARY_DIR}
+    $<BUILD_INTERFACE:${TAPL_BUILD_INCLUDE_DIR}>
+    $<INSTALL_INTERFACE:include>
+)

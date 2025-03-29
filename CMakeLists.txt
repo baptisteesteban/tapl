@@ -4,6 +4,8 @@ project(tapl CXX)
 set(CMAKE_CXX_STANDARD 20)
 option(BUILD_TESTING "Build Tests" ON)
 
+include(GNUInstallDirs)
+
 find_package(FLEX REQUIRED)
 find_package(BISON REQUIRED)
 
