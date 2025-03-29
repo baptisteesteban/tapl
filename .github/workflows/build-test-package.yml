@@ -1,0 +1,40 @@
+name: Compile with GCC and Conan
+
+on:
+  push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        gcc_version: [11, 12, 13, 14]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up GCC
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y gcc-${{ matrix.gcc_version }} g++-${{ matrix.gcc_version }}
+
+    - name: Install Conan
+      run: |
+        pip install conan
+
+    - name: Set environment variables
+      run: |
+        echo "CC=gcc-${{ matrix.gcc_version }}" >> $GITHUB_ENV
+        echo "CXX=g++-${{ matrix.gcc_version }}" >> $GITHUB_ENV
+
+    - name: Build Test Package
+      run: |
+        conan profile detect
+        if [ "${{ github.ref }}" == "refs/heads/master" ]; then
+            BUILD_TYPE=Release
+        else
+            BUILD_TYPE=Debug
+        fi
+        conan create . --build missing -s compiler.cppstd=20 -s compiler.libcxx=libstdc++11 -s build_type=$BUILD_TYPE
