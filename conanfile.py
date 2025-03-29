@@ -1,5 +1,6 @@
 from conan import ConanFile
 from conan.tools.cmake import cmake_layout, CMakeDeps, CMakeToolchain, CMake
+from conan.tools.build import can_run
 
 
 class TaplRecipe(ConanFile):
@@ -19,6 +20,8 @@ class TaplRecipe(ConanFile):
 
     def generate(self):
         tc = CMakeToolchain(self)
+        if self.conf.get("tools.build:skip_test", default=False):
+            tc.variables["BUILD_TESTING"] = "OFF"
         tc.generate()
         deps = CMakeDeps(self)
         deps.generate()
@@ -27,3 +30,5 @@ class TaplRecipe(ConanFile):
         cmake = CMake(self)
         cmake.configure()
         cmake.build()
+        if can_run(self) and not self.conf.get("tools.build:skip_test", default=False):
+            cmake.test()
