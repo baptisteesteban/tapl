@@ -42,3 +42,6 @@ class TaplRecipe(ConanFile):
         cmake = CMake(self)
         cmake.install()
         copy(self, "LICENSE.md", src=self.source_folder, dst=self.package_folder)
+
+    def package_info(self):
+        self.cpp_info.components["simple"].libs = ["tapl-simple"]

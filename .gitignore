@@ -1,5 +1,5 @@
 **/.cache
-build
+**/build
 Testing
 .vscode
-CMakeUserPresets.json
+**/CMakeUserPresets.json
